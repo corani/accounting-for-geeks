@@ -1,0 +1,709 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Ledger CLI - Accounting for Geeks ツ</title>
+
+		<meta name="description" content="Ledger CLI - Accounting for Geeks">
+		<meta name="author" content="Daniël Bos">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+		<script>
+			if( window.location.search.match( /print-pdf/gi ) ) {
+				var link = document.createElement( 'link' );
+				link.rel = 'stylesheet';
+				link.type = 'text/css';
+				link.href = 'css/print/pdf.css';
+				document.getElementsByTagName( 'head' )[0].appendChild( link );
+			}
+		</script>
+		<style type="text/css">
+		blockquote {
+			text-align: justify;
+			font-family: Serif !important;
+			border-left: 10px solid #ccc !important;
+		}
+		blockquote footer {
+			text-align: right;
+			color: #666 !important;
+			font-size: 80% !important;
+		}
+		p {
+			text-align: justify;
+		}
+		dl {
+			text-align: left;
+		}
+		dt {
+			text-decoration: underline;
+		}
+		dd {
+			margin-left: 30px !important;
+			padding-left: 5px !important;
+			font-family: Serif !important;
+			border-left: 10px solid #ccc !important;
+			font-size: 80% !important;
+		}
+		</style>
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<section data-background="img/river.jpg">
+						<h1 style="background: rgba(0, 0, 0, 0.5); color: white">Ledger CLI</h1>
+						<h3 style="background: rgba(0, 0, 0, 0.5); color: white">Accounting for Geeks ツ</h3>
+						<br/><br/><br/><br/><br/>
+						<h5 style="background: rgba(0, 0, 0, 0.5); color: white; text-align: right; padding-right: 10px">By <a href="https://plus.google.com/+DanielBos/about" style="color:#aaf">Daniël Bos</a></h5>
+					</section>
+
+					<section>
+						<h2>Agenda</h2>
+						
+						<ol>
+							<li>What is accounting?</li>
+							<li>Accounting History</li>
+							<li>Why is it useful for us?</li>
+							<li>Accounting Concepts</li>
+							<li>Double Entry</li>
+							<li>Ledger CLI</li>
+						</ol>
+					</section>
+				</section>
+				
+				<section>
+					<section data-background="img/accounting1.jpg">
+						<h1 style="background: rgba(0, 0, 0, 0.5); color: white">What?</h1>
+					</section>
+					
+					<section>
+						<h2>What is accounting?</h2>
+						<blockquote cite="">
+							&ldquo;The process of identifying, measuring, and communicating economic information to permit
+							informed judgements and decisions by users of that information.&rdquo;
+						</blockquote>
+					</section>
+					<section>
+						<h4>The guy who wrote the book said it better</h4>
+						<blockquote>
+							&ldquo;... in order that the subjects of the most gracious Duke of Urbino may have complete instructions
+							in the conduct of business [and to] give the trader without delay information as to his assets and
+							liabilities.&rdquo;
+							<footer> - Luca Pacioli (c. 1445-1517)</footer>
+						</blockquote>					
+					</section>
+					<section>
+						<h2>What it's not</h2>
+						<ul>
+							<li>Mathematics (Only adding and subtracting)</li>
+							<li>Difficult (Only a few concepts and techniques)</li>
+					</section>
+				</section>
+				
+				<section>
+					<section data-background="img/history.jpg">
+						<h1 style="background: rgba(0, 0, 0, 0.5); color: white">History</h1>
+					</section>
+					<section>
+						<h2>Accounting History</h2>
+						<p>
+							The system that's still in use today was first described in the 15th century by an Italian guy named <em>Luca Pacioli</em>,
+							but examples of this system have been found as early as the 13th century.
+						</p>
+						<p>
+							Other systems have been used before that, going back at least 10,000 years and were used in ancient Egypt, China, India,
+							Greece and Rome.
+						</p>
+					</section>
+					<section>
+						<h2>Why "only" 10,000 years?</h2>
+						<p>For accounting to be used, at least the following seven key ingredients are needed:</p>
+						<ol>
+							<li class="fragment">Private property</li>
+							<li class="fragment">Capital</li>
+							<li class="fragment">Commerce</li>
+							<li class="fragment">Credit</li>
+							<li class="fragment">Writing</li>
+							<li class="fragment">Money</li>
+							<li class="fragment">Arithmetic</li>
+						</ol>
+					</section>
+					<section>
+						<h2>The books in Bookkeeping</h2>
+						<ol>
+							<li class="fragment">In 12th century Florence merchants used to record all important events in a book called <em>Ricordanze</em>,
+							this included transactions, receipts and payments.</li>
+							<li class="fragment">But as businesses grew, it became more and more difficult to find something, or to know the total amounts owed or due.
+							To address this problem, they started to transfer these entries into a second book, called <em>Journal</em>, grouped by 'accounts'.</li>
+							<li class="fragment">Eventually, a third book, called <em>Ledger</em> was added, to maintain a summary of totals for all the accounts.</li>
+						</ol>
+					</section>
+				</section>
+
+				<section>
+					<section data-background="img/piggy-bank.jpg">
+						<h1 style="background: rgba(0, 0, 0, 0.5); color: white">Why?</h1>
+					</section>
+					
+					<section>
+						<h2>Why is it useful for us?</h2>
+						<ul>
+							<li class="fragment">Know where your money is going</li>
+							<li class="fragment">Financial planning and forecasting</li>
+							<li class="fragment">Know how much you have and owe</li>
+							<li class="fragment">Budgeting</li>
+							<li class="fragment">Retirement planning</li>
+							<li class="fragment">Tax declaration</li>
+						</ul>
+					</section>
+				</section>
+
+				<section>
+					<section data-background="img/concepts.jpg">
+						<h1 style="background: rgba(0, 0, 0, 0.5); color: white">Concepts</h1>
+					</section>
+					
+					<section>
+						<h2>Accounting Concepts</h2>
+						<p>The first principle of accounting is the "Accounting Equation":</p>
+						<blockquote>
+						Assets = Equity + Liabilities
+						</blockquote>
+						<div class="fragment">
+						<p>The second principle of accounting is that money can't appear or disappear:</p>
+						<blockquote>
+						All entries must balance to zero
+						</blockquote>
+						</div>
+						<p class="fragment">And that is all!</p>
+					</section>
+					
+					<section>
+						<h2>Some terms</h2>
+						<dl>
+							<dt>Assets</dt>
+								<dd>Things of value that you own, e.g. money, a house, a car, investments, etc.</dd>
+							<dt>Liabilities</dt>
+								<dd>Money that you owe, e.g. mortgage, credit-card balance, loans, etc.</dd>
+							<dt>Equity</dt>
+								<dd>Things like opening balances.</dd>
+						</dl>
+					</section>
+					
+					<section>
+						<h2>An example</h2>
+						<table>
+							<thead>
+								<tr><th style="color: #aaa">Note</th><th>Account</th><th>RMB</th></tr>
+								<tr><td style="border-bottom: solid 1px #666; color: #aaa">Start a company</td><td style="border-bottom: solid 1px #666;">Equity:Starting capital</td><td style="text-align: right; border-bottom: solid 1px #666;">600,000</td></tr>
+							</thead>
+							<tbody>
+								<tr class="fragment"><td style="color: #aaa">Buy a shop</td><td>Assets:Shop</td><td style="text-align: right">320,000</td></tr>
+								<tr class="fragment"><td></td><td style="border-bottom: solid 1px #666;">Assets:Bank</td><td style="text-align: right; border-bottom: solid 1px #666;">280,000</td></tr>
+								<tr class="fragment"><td></td><td></td><td style="text-align: right">600,000</td></tr>
+								<tr><td colspan="3" style="height: 5px; border-bottom: dashed 1px #888;"></td></tr>
+								<tr class="fragment"><td style="color: #aaa">Buy products</td><td>(Liabilities:Payable)</td><td style="text-align: right">-70,000</td></tr>
+								<tr class="fragment"><td></td><td style="border-bottom: solid 1px #666;">Assets:Inventory</td><td style="text-align: right; border-bottom: solid 1px #666;">70,000</td></tr>
+								<tr class="fragment"><td></td><td></td><td style="text-align: right">600,000</td></tr>
+								<tr><td colspan="3" style="height: 5px; border-bottom: dashed 1px #888;"></td></tr>
+								<tr class="fragment"><td style="color: #aaa">Sell products</td><td>Assets:Receivable</td><td style="text-align: right">6,000</td></tr>
+								<tr class="fragment"><td></td><td style="border-bottom: solid 1px #666;">Assets:Inventory</td><td style="text-align: right; border-bottom: solid 1px #666;">64,000</td></tr>
+								<tr class="fragment"><td></td><td></td><td style="text-align: right; ">600,000</td></tr>
+							</tbody>
+						</table>
+					</section>
+					
+					<section>
+						<h2>An example (cont'd)</h2>
+						<p>All the entries in the previous example involved moving money from one account to another. We didn't create or destroy money during the process.
+						The final balance looks like this:</p>
+						<table class="fragment">
+							<thead>
+								<tr><th style="border-bottom: solid 1px #666;">Account</th><th style="border-bottom: solid 1px #666;">RMB</th></tr>
+							</thead>
+							<tbody>
+								<tr><td style="border-bottom: dashed 1px #666;">Equity:Starting capital</td><td style="text-align: right; border-bottom: dashed 1px #666">600,000</td></tr>
+								<tr><td>Assets:Shop</td><td style="text-align: right">320,000</td></tr>
+								<tr><td>Assets:Bank</td><td style="text-align: right">280,000</td></tr>
+								<tr><td>Assets:Inventory</td><td style="text-align: right">64,000</td></tr>
+								<tr><td style="border-bottom: dashed 1px #666;">Assets:Receivable</td><td style="text-align: right; border-bottom: dashed 1px #666">6,000</td></tr>
+								<tr><td>(Liabilities:Payable)</td><td style="text-align: right">-70,000</td></tr>
+							</tbody>
+						</table>
+					</section>
+
+					<section>
+						<h2>Another term</h2>
+						<dl>
+							<dt>Net worth</dt>
+								<dd>The total of all Assets - all Liabilities</dd>
+						</dl>
+						<p>In the previous example our Net worth is equal to our Equity (Starting capital). This is usually not the case.</p>
+						<h3>Why?</h3>
+					</section>
+					
+					<section>
+						<h2>Where is the profit?</h2>
+						<p>Money can't be created or destroyed ...</p>
+						<p class="fragment">So income comes <u>out</u> of an "Income" account (e.g. an employer, or a customer), which will have a <u>negative</u> balance.</p>
+						<p class="fragment">Expenses go <u>in</u> to an "Expense" account (e.g. a supplier, or an employee), which will have a <u>positive</u> balance.</p>
+						<p class="fragment"><i>This may sound a bit counter-intuitive, but just think about how the money flows and it will all make sense.</i></p>
+					</section>
+					
+					<section>
+						<h2>Another example</h2>
+						<table>
+							<thead>
+								<tr><th style="border-bottom: solid 1px #666; color: #aaa">Note</th><th style="border-bottom: solid 1px #666;">Account</th><th style="border-bottom: solid 1px #666;">RMB</th><th style="border-bottom: solid 1px #666;">Balance</th></tr>
+							</thead>
+							<tbody>
+								<tr class="fragment"><td style="color: #aaa">Pay salary</td><td>Assets:Bank</td><td style="text-align: right">-10,000</td><td style="text-align: right">270,000</td></tr>
+								<tr class="fragment"><td></td><td style="border-bottom: solid 1px #666;">Expenses:Salary</td><td style="text-align: right; border-bottom: solid 1px #666;">10,000</td><td style="text-align: right; border-bottom: solid 1px #666;">10,000</td></tr>
+								<tr class="fragment"><td></td><td></td><td style="text-align: right">= 0</td><td style="text-align: right"></td></tr>
+								<tr><td colspan="4" style="height: 5px; border-bottom: dashed 1px #888;"></td></tr>
+								<tr class="fragment"><td style="color: #aaa">Sell products</td><td>Assets:Inventory</td><td style="text-align: right">-5,000</td><td style="text-align: right">59,000</td></tr>
+								<tr class="fragment"><td style="color: #aaa">20% margin</td><td>Income:Sales</td><td style="text-align: right">-1,000</td><td style="text-align: right">-1,000</td></tr>
+								<tr class="fragment"><td></td><td style="border-bottom: solid 1px #666;">Assets:Bank</td><td style="text-align: right; border-bottom: solid 1px #666;">6,000</td><td style="text-align: right; border-bottom: solid 1px #666;">65,000</td></tr>
+								<tr class="fragment"><td></td><td></td><td style="text-align: right">= 0</td><td></td></tr>
+							</tbody>
+						</table>
+					</section>
+
+					<section>
+						<h2>And another term</h2>
+						<dl>
+							<dt>Net profit/loss</dt>
+								<dd>The total of all Income - all Expenses</dd>
+						</dl>
+						<p>In the previous example our Net loss is 1,000 - 10,000 = RMB -9,000. Obviously we want to see a positive number here ツ</p>
+					</section>					
+				</section>
+
+				<section>
+					<section data-background="img/double-entry.jpg">
+						<h1 style="background: rgba(0, 0, 0, 0.5); color: white">Double Entry</h1>
+					</section>
+					
+					<section>
+						<h2>Double Entry Bookkeeping</h2>
+						<p>In all the previous examples, each payment operated on (at least) two accounts. This is the principle of "double entry" bookkeeping.</p>
+						<p>Historically you would enter each payment in two separate books, the Journal and the Ledger. With modern day computers, these two "books" are kept
+						synchronized automatically</p>
+					</section>
+					
+					<section>
+						<h2>Applications</h2>
+						<p>There are many Open Source and commercial applications for accounting. Some examples are:</p>
+						<ul>
+							<li>GnuCash (Open Source, GUI)</li>
+							<li>HomeBank (Open Source, GUI)</li>
+							<li><u>Ledger CLI</u> (Open Source, CLI)</li>
+							<li>Mint.com (Commercial, Online)</li>
+							<li>Microsoft Money (Commercial, Free! But no longer supported)</li>
+							<li>Quicken (Commercial)</li>
+						</ul>
+						<p>Just have a look at the long (but incomplete) list on <a href="http://en.wikipedia.org/wiki/Comparison_of_accounting_software">Wikipedia</a>.</p>
+					</section>
+				</section>
+
+				<section>
+					<section data-background="img/working.jpg">
+						<h1 style="background: rgba(0, 0, 0, 0.5); color: white">Ledger CLI</h1>
+					</section>
+					
+					<section>
+						<h2>Ledger CLI</h2>
+						<blockquote>
+						Ledger is a powerful, double-entry accounting system that is accessed from the UNIX command-line. Ledger, begun in 2003, is written by John Wiegley and released under the BSD license. It has also inspired several ports to other languages.
+						</blockquote>
+					</section>
+					
+					<section>
+						<h2>Why a CLI application?</h2>
+						<p>As you've seen in the examples earlier, the principles of accounting are <em>very</em> simple. Entering data is easy and a text editor is the fastest way
+						for this. The hard part is reporting, but the actual reports are mostly text-based.</p>
+						<p>Ledger CLI uses plain text files, so you can use any text editor. Moreover, you can easily write scripts to generate entries, or to process reports.</p>
+					</section>
+					
+					<section>
+						<h2>What does it look like?</h2>
+						<p>Create a text file with the following content:</p>
+						<pre><code data-trim>
+2014/06/05 Wallmart
+    Expenses:Groceries            RMB 123.00
+    Assets:Checking
+						</code></pre>
+						<p>Run some simple reports:</p>
+						<pre><code data-trim>
+$ ledger -f ledger.dat balance
+                 RMB -123.00  Assets:Checking
+                 RMB  123.00  Expenses:Groceries
+----------------------------
+                           0
+						   
+$ ledger -f ledger.dat register checking
+05-Jun-2014 Wallmart      Expenses:Checking      RMB -123.00   RMB -123.00
+						</code></pre>
+						<p>Ledger <em>never</em> changes files, it only generates reports!</p>
+					</section>
+					
+					<section>
+						<h2>How I use it</h2>
+						<p>One folder with all the ledger files, shared through <em>BitTorrent Sync</em> to my phone, tablet and NAS.</p>
+						<p><em>Incron</em> is configured to so that a change of any ledger files runs a script to generate several reports in the same folder, they will also be sync'd</p>
+						<p>A script to automatically get the exchange rates between RMB/Euro/Dollar and Nokia/Microsoft stock prices.</p>
+						<p>A set of monthly average entries income/expenses in ledger, to help with forecasting.</p>
+					</section>
+					
+					<section>
+						<h2>How I use it (cont'd)</h2>
+						<p>A spreadsheet with the amortization schedule of my mortgage (all interest and principle payments) with a script to automatically re-generate the ledger file.</p>
+						<p><em>Expense Manager</em> Android App to record all expenses without receipts.</p>
+						<p>Weekly enter all entries into Ledger.</p>
+						<p>Monthly go through the reports and adjust the budget.</p>
+						<p>Yearly when I need to declare tax, I can run a simple report at get my total income.</p>
+					</section>
+					
+					<section>
+						<h2>An Example</h2>
+						<p>Let's create a ledger file for our example company:</p>
+						<pre class="fragment"><code data-trim>
+2014/01/01 Owner
+    Assets:Bank                 RMB 600,000.00
+    Equity:Starting Capital
+						</code></pre>
+						<p class="fragment">You can omit the amount from one of the accounts, Ledger will automatically balance it.</p>
+						<pre class="fragment"><code data-trim>
+2014/01/10 XYZ Corp.
+    Assets:Shop                 RMB 320,000.00
+    Assets:Bank
+						</code></pre>
+					</section>
+
+					<section>
+						<h2>An Example (Cont'd)</h2>
+						<p>We buy some inventory and promise to pay it later:</p>
+						<pre class="fragment"><code data-trim>
+2014/01/12 Supplier
+    Assets:Inventory            RMB  70,000.00
+    Liabilities:Payable
+						</code></pre>
+						<p class="fragment">And make our first sale, which will be paid to us later:</p>
+						<pre class="fragment"><code data-trim>
+2014/01/14 Customer
+    Assets:Receivable           RMB   6,000.00
+    Assets:Inventory
+						</code></pre>
+					</section>
+
+					<section>
+						<h2>An Example (Cont'd)</h2>
+						<p>Now let's run some reports:</p>
+						<pre class="fragment"><code data-trim>
+$ ledger bal
+                 RMB 280,000.00  Assets:Bank
+                 RMB 320,000.00  Assets:Shop
+                 RMB  64,000.00  Assets:Inventory
+                 RMB   6,000.00  Assets:Receivable
+                 RMB -70,000.00  Liabilities:Payable
+                 RMB-600,000.00  Equity:Starting Capital
+-------------------------------
+                              0
+						</code></pre>
+						<p class="fragment" style="font-size: 80%">(We can set the default ledger file in ~/.ledgerrc and we can abbreviate the commands, as long as they're unique)</p>
+						<pre class="fragment"><code data-trim>
+$ ledger reg receivable
+14-Jan-2014 Customer    Assets:Receivable    RMB   6,000.00  RMB   6,000.00
+
+$ ledger reg payable
+14-Jan-2014 Supplier    Liabilities:Payable  RMB -70,000.00  RMB -70,000.00
+						</code></pre>
+					</section>
+					
+					<section>
+						<h2>Net worth</h2>
+						<p>And of course we want to know our net worth!</p>
+						<pre class="fragment"><code data-trim>
+$ ledger bal assets liabilities
+                 RMB 280,000.00  Assets:Bank
+                 RMB 320,000.00  Assets:Shop
+                 RMB  64,000.00  Assets:Inventory
+                 RMB   6,000.00  Assets:Receivable
+                 RMB -70,000.00  Liabilities:Payable
+-------------------------------
+                 RMB 600,000.00
+						</code></pre>
+					</section>
+
+					<section>
+						<h2>Income/Expenses</h2>
+						<p>We sell some products that are paid cash:</p>
+						<pre class="fragment"><code data-trim>
+2014/01/18 Customer
+    Assets:Bank                 RMB  6,000.00
+    Income:Sales                RMB -1,000.00
+    Assets:Inventory            RMB -5,000.00
+						</code></pre>
+						<p class="fragment">And pay our employee some salary</p>
+						<pre class="fragment"><code data-trim>
+2014/01/25 Employee
+    Expenses:Salary             RMB 10,000.00
+    Assets:Bank
+						</code></pre>
+					</section>
+
+					<section>
+						<h2>Net profit/loss</h2>
+						<p>Our shop isn't doing so well ...</p>
+						<pre class="fragment"><code data-trim>
+$ ledger bal income expenses
+                 RMB  -1,000.00  Income:Sales
+                 RMB  10,000.00  Expenses:Salary
+-------------------------------
+                 RMB  -9,000.00
+						</code></pre>
+					</section>
+					
+					<section>
+						<h2>Nobody likes tax</h2>
+						<pre class="fragment"><code data-trim>
+2014/01/18 Customer
+    Assets:Bank                 RMB  6,100.00
+    Income:Sales                RMB -1,000.00
+    Assets:Inventory            RMB -5,000.00
+    Liabilities:Tax Payable     RMB   -100.00 ; 10% sales VAT
+						</code></pre>
+						<p class="fragment">Now when we check the balance of liabilities</p>
+						<pre class="fragment"><code data-trim>
+$ ledger bal liabilities
+                 RMB -70,100.00  Liabilities
+                 RMB -70,000.00      Payable
+                 RMB    -100.00      Tax Payable
+-------------------------------
+                 RMB -70,100.00
+						</code></pre>
+					</section>
+
+					<section>
+						<h2>Nobody likes tax (Cont'd)</h2>
+						<p>When we pay the tax to the tax bureau:</p>
+						<pre class="fragment"><code data-trim>
+2014/01/18 Tax Bureau
+    Assets:Bank                 RMB    200.00
+    Liabilities:Tax Payable     RMB   -100.00
+    Expenses:Hongbao            RMB   -100.00
+						</code></pre>
+						<p class="fragment">Now our loss is even bigger :-(</p>
+						<pre class="fragment"><code data-trim>
+$ ledger bal income expenses
+                 RMB  -1,000.00  Income:Sales
+                 RMB  10,100.00  Expenses
+                 RMB  10,000.00      Salary
+                 RMB     100.00      Hongbao
+-------------------------------
+                 RMB  -9,100.00
+						</code></pre>
+					</section>
+					
+				</section>
+				
+				<section>
+					<section data-background="img/advanced.jpg">
+						<h1 style="background: rgba(0, 0, 0, 0.5); color: white">Advanced</h1>
+					</section>
+
+					<section>
+						<h2>Commodity Pricing</h2>
+						<p>If you want to track exchange rates or stock prices, you can use the ledger price database:</p>
+						<pre class="fragment"><code data-trim>
+P 2014/06/01 10:00:00 &euro; RMB 8.25
+P 2014/06/01 10:00:00 $ RMB 6.60
+P 2014/06/01 10:00:00 NOK  $ 7.82
+P 2014/06/01 10:00:00 MSFT $ 40.32
+						</code></pre>
+						<p class="fragment">You can ask ledger to report in any currency, as long as there's an entry in the price database to convert it.</p>
+						<pre class="fragment"><code data-trim>
+$ ledger balance
+                 NOK  10
+                 MSFT 1         Assets:Shares
+
+$ ledger --price-db prices.db -X RMB balance
+                 RMB 782.23     Assets:Shares
+				 
+						</code></pre>
+					</section>
+					
+					<section>
+						<h2>Comments and Tags</h2>
+						<p>You can add comments and tags to entire transactions, or to individual bookings</p>
+						<pre class="fragment"><code data-trim>
+2014/06/01 Suning
+	; Receipt: 0132
+	Expenses:Electronics          RMB 1,000.00  ; DVD player
+	Assets:Checking
+						</code></pre>
+						<p class="fragment">This will add a comment "DVD player" to the expense booking and a tag "Receipt: 0132" to the whole transaction. You can use tags in your reports:</p>
+						<pre class="fragment"><code data-trim>
+$ ledger register --meta=Receipt
+01-Jun-2014 Expenses:Electronics  RMB 1,000.00  RMB 1,000.00   Receipt:0132
+						</code></pre>
+					</section>
+					
+					<section>
+						<h2>Transaction state</h2>
+						<p>A transaction can have one of the following states: cleared, pending, or uncleared. By default a transaction is uncleared.</p>
+						<pre class="fragment"><code data-trim>
+2014/06/01 * Suning ; cleared
+    Expenses:Electronics          RMB 1,000.00
+    Assets:Checking
+
+2014/06/01 ! Wallmart ; pending
+    Expenses:Electronics          RMB   600.00
+    Assets:Checking
+
+2014/06/01 Yikatong ; uncleared
+    Expenses:Transportation       RMB    50.00
+    Assets:Cash
+						</code></pre>
+						<p class="fragment">What these states mean is up to you. You can control which will show in your reports by using --cleared, --pending, or --uncleared.</p>
+					</section>
+					
+					<section>
+						<h2>Automation</h2>
+						<p>In the earlier example we calculated the VAT amount ourselves. We can also ask Ledger to do this automatically:</p>
+						<pre class="fragment"><code data-trim>
+= Income:Sales
+    Liabilities:Tax Payable  ($amount * 0.1)  ; 10% VAT
+
+2014/06/01 Customer
+    Assets:Inventory         RMB -5,000.00
+    Income:Sales             RMB -1,000.00
+    Assets:Bank
+						</code></pre>
+						<p class="fragment">This will be interpreted as:</p>
+						<pre class="fragment"><code data-trim>
+2014/06/01 Customer
+    Assets:Inventory         RMB -5,000.00
+    Income:Sales             RMB -1,000.00
+    Liabilities:Tax Payable  RMB   -100.00  ; 10% VAT
+    Assets:Bank
+						</code></pre>
+					</section>
+					
+					<section>
+						<h2>Budgeting</h2>
+						<p>Budgeting is giving all your income an assignment at the start of the month. Ledger allows you to declare a budget and check your actual expenses against it:</p>
+						<pre class="fragment"><code data-trim>
+~ Monthly
+    Expenses:Rent          RMB  3,000.00
+    Expenses:Food          RMB  1,000.00
+    Assets
+						</code></pre>
+						<p class="fragment">You can use --budget to show your actual expenses against your budget. You can use --unbudgeted to show all expenses that you didn't budget for. For example:</p>
+						<pre class="fragment"><code data-trim>
+$ ledger --budget --monthly register expenses
+						</code></pre>
+					</section>
+
+					<section>
+						<h2>Forecasting</h2>
+						<p>Forecasting is closely related to budgeting, it allows you to make a prediction of future expenses and account balances. If you've set up budgets, or have transactions
+						at a future date, you can use --forecast. Some examples:</p>
+						<pre class="fragment"><code data-trim>
+$ ledger --forecast "T>{RMB 1,000,000.00}" register assets liabilities
+
+$ ledger --forecast "d<[2020]" balance assets liabilities
+						</code></pre>
+						<p class="fragment">The first command will show you when you'll be a millionaire ツ The second one what the balance of your accounts (and net-worth) will be at the end
+						of 2019.</p>
+					</section>
+					
+					<section>
+						<h2>For developers</h2>
+						<p>I won't be showing details (<a href="http://www.ledger-cli.org/3.0/doc/ledger3.html">RTFM</a> ツ) but here are some of the features that developers can use:</p>
+						<ul>
+							<li>Easy to parse/generate file format, with good documentation</li>
+							<li>Report format can be customized</li>
+							<li>Can output reports in XML format</li>
+							<li>Python API available</li>
+							<li>Can import various kinds of CSV files</li>
+							<li>Active community and several ports in other languages</li>
+						</ul>
+					</section>
+
+				</section>
+				
+				<section data-background="img/questions.jpg">
+					<h1 style="background: rgba(0, 0, 0, 0.5); color: white">Questions?</h1>
+				</section>
+				
+				<section data-background="img/burning-money.jpg">
+					<h1 style="background: rgba(0, 0, 0, 0.5); color: white">THE END</h1>
+					<h3 style="background: rgba(0, 0, 0, 0.5); color: white">BY Daniël Bos</h3>
+					<br/><br/><br/><br/><br/><br/><br/>
+					<h5 style="background: rgba(0, 0, 0, 0.5); color: white">Created with <a href="https://github.com/hakimel/reveal.js/">Reveal.JS</a></h5>
+				</section>
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+				previewLinks: true,
+				
+				margin: 0.1,
+
+				theme: Reveal.getQueryHash().theme || 'sky', // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/fade/none
+				backgroundTransition: 'slide',
+
+				// Parallax scrolling
+				// parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+				// parallaxBackgroundSize: '2100px 900px',
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
